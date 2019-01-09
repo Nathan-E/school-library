@@ -1,4 +1,5 @@
-const User = require('./user');
+const x = require('./user');
+const User = x.User;
 const Admin = require('./admin');
 
 //Tests the User function
