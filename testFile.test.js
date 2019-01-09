@@ -1,4 +1,4 @@
-require('./user');
+const User = require('./user');
 
 //Tests the Library Function
 describe('1. Tests the User Module', () => {
