@@ -1,30 +1,26 @@
-const x = require('./user');
-const User = x.User;
-const extend = x.extend;
-
-//Book object holds all the book
-var books = {};
+const Person = require('./user');
+const extend = require('./extend');
+const library = require('./library')
 
 //Admin constructor function
 function Admin(name, type){
-    User.call(this, name, type);
+    Person.call(this, name);
+    this.type = type
 }
+
+extend(Admin, Person);
 
 //Add books to the books object
 Admin.prototype.addBook = function(name, quantity){
-    books[name] = quantity;
+    library[name] = quantity;
 }
 
+//an instance of Admin
 var zak = new Admin('Zak', 'Admin');
+console.log(library);
 
-zak.addBook('Alice', 10);
-zak.addBook('Lucy', 2);
-zak.addBook('The Hobbit', 4);
-zak.addBook('Avengers', 1);
+zak.addBook('Yellow Sun', 5);
 
-
-console.log(books);
-
-extend(Admin, User);
+console.log(library);
 
 module.exports = Admin;

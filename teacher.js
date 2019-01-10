@@ -1,5 +1,5 @@
-const User = require('./user')
-const extend = require('./extend')
+const User = require('./user');
+const extend = require('./extend');
 
 //Teacher constructor (Parent function)
 function Teacher(name, type) {
@@ -7,6 +7,6 @@ function Teacher(name, type) {
     this.type = type
 }
 
-extend(Teacher, User)
+extend(Teacher, User);
 
 module.exports = Teacher;
