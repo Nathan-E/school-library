@@ -1,6 +1,7 @@
 const User = require('./user');
 const Admin = require('./admin');
-const Person = require('./person')
+const Person = require('./person');
+const Teacher = require('./teacher');
 
 //Tests the Person Function
 describe('1. Tests the Person Module', () => {
