@@ -1,9 +1,9 @@
 //Book object holds all the books
 var library = {
-    'Sherlock holmes': 6,
+    'War-Ship': 6,
     'Alice': 10,
-    'Lucy': 2,
-    'The Hobbit': 4,
+    'Lucy': 1,
+    'The Hobbit': 0,
     'Avengers': 1
     };
 

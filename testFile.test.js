@@ -50,7 +50,7 @@ describe('5. Tests the Student Module', () => {
 });
 
 //Tests the Senior Function
-describe('5. Tests the Senior Module', () => {
+describe('6. Tests the Senior Module', () => {
     test('Senior constructor', () => {
         const obj = new Senior('Zik', 'Senior');
         expect(obj.name).toBe('Zik');
@@ -59,7 +59,7 @@ describe('5. Tests the Senior Module', () => {
 });
 
 //Tests the Junior Function
-describe('5. Tests the Junior Module', () => {
+describe('7. Tests the Junior Module', () => {
     test('Junior constructor', () => {
         const obj = new Junior('Zik', 'Junior');
         expect(obj.name).toBe('Zik');

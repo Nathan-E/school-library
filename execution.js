@@ -44,6 +44,10 @@ Austin.req('The Hobbit');
 const Jo = new Senior('Jo', 'Student');
 Jo.req('The Force Man');
 
+//an instance of a Senior Student
+const Kazeem = new Senior('Kazeem', 'Student');
+Kazeem.req('Lucy');
+
 //an instance of Admin
 var kingsley = new Admin('Kingsley', 'Admin');
 kingsley.addBook('Yellow Sun', 5);
@@ -51,6 +55,23 @@ kingsley.addBook('Yellow Sun', 5);
 console.log(details);
 console.log(bookRequest);
 
-kingsley.giveBook = function (){
-    
+giveBook = function (){
+    var result = {};
+    for(let i = 0; i < bookRequest.length; i++){
+        for(let j = 0; j < bookRequest[i].length; j++){
+            if(library[bookRequest[i][j]]){
+                result[details[i][j]] = 'given';
+                library[bookRequest[i][j]]--;
+            }
+            else if(library[bookRequest[i][j]] == 0){
+                result[details[i][j]] = 'book taken';
+            }
+            else{
+                result[details[i][j]] = 'book not available';
+            }
+        }
+    }
+    return result;
 }
+
+console.log(giveBook());
