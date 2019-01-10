@@ -3,6 +3,7 @@ const Admin = require('./admin');
 const Person = require('./person');
 const Teacher = require('./teacher');
 const Student = require('./student');
+const Senior = require('./senior');
 
 //Tests the Person Function
 describe('1. Tests the Person Module', () => {
@@ -35,7 +36,6 @@ describe('4. Tests the User Module', () => {
     test('User constructor', () => {
         const obj = new User('Chibueze', 'Admin');
         expect(obj.name).toBe('Chibueze');
-        expect(obj.type).toBe('Admin');
     });
 });
 
@@ -45,5 +45,14 @@ describe('5. Tests the Student Module', () => {
         const obj = new Student('Zik', 'Teacher');
         expect(obj.name).toBe('Zik');
         expect(obj.type).toBe('Teacher');
+    });
+});
+
+//Tests the Senior Function
+describe('5. Tests the Senior Module', () => {
+    test('Senior constructor', () => {
+        const obj = new Senior('Zik', 'Senior');
+        expect(obj.name).toBe('Zik');
+        expect(obj.type).toBe('Senior');
     });
 });
