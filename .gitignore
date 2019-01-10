@@ -1,3 +1,9 @@
 node_modules/
 package-lock.json
-OOP.js
+admin.js
+junior.js
+student.js
+teacher.js
+user.js
+execution.js
+juniorRequest.js
