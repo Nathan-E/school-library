@@ -52,26 +52,4 @@ Kazeem.req('Lucy');
 var kingsley = new Admin('Kingsley', 'Admin');
 kingsley.addBook('Yellow Sun', 5);
 
-console.log(details);
-console.log(bookRequest);
-
-giveBook = function (){
-    var result = {};
-    for(let i = 0; i < bookRequest.length; i++){
-        for(let j = 0; j < bookRequest[i].length; j++){
-            if(library[bookRequest[i][j]]){
-                result[details[i][j]] = 'given';
-                library[bookRequest[i][j]]--;
-            }
-            else if(library[bookRequest[i][j]] == 0){
-                result[details[i][j]] = 'book taken';
-            }
-            else{
-                result[details[i][j]] = 'book not available';
-            }
-        }
-    }
-    return result;
-}
-
-console.log(giveBook());
+kingsley.handleRequest();
