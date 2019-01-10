@@ -50,3 +50,7 @@ kingsley.addBook('Yellow Sun', 5);
 
 console.log(details);
 console.log(bookRequest);
+
+kingsley.giveBook = function (){
+    
+}
