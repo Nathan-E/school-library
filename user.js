@@ -1,12 +1,17 @@
 const Person = require('./person');
-const extend = require('./extend')
+const extend = require('./extend');
+const bookRequest = require('./request');
 
 //User constructor (Parent function)
-function User(name, type) {
+function User(name) {
     Person.call(this, name);
-    this.type = type
 }
 
-extend(User, Person)
+extend(User, Person);
+
+User.prototype.req = function (name){
+    bookRequest.push(name);
+    return bookRequest;
+}
 
 module.exports = User;
