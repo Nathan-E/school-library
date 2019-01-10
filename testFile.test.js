@@ -4,6 +4,7 @@ const Person = require('./person');
 const Teacher = require('./teacher');
 const Student = require('./student');
 const Senior = require('./senior');
+const Junior = require('./junior');
 
 //Tests the Person Function
 describe('1. Tests the Person Module', () => {
@@ -54,5 +55,14 @@ describe('5. Tests the Senior Module', () => {
         const obj = new Senior('Zik', 'Senior');
         expect(obj.name).toBe('Zik');
         expect(obj.type).toBe('Senior');
+    });
+});
+
+//Tests the Junior Function
+describe('5. Tests the Junior Module', () => {
+    test('Junior constructor', () => {
+        const obj = new Junior('Zik', 'Junior');
+        expect(obj.name).toBe('Zik');
+        expect(obj.type).toBe('Junior');
     });
 });
