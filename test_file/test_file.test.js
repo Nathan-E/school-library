@@ -5,64 +5,68 @@ const Teacher = require('../person/users/teacher/teacher');
 const Student = require('../person/users/students/student');
 const Senior = require('../person/users/students/senior');
 const Junior = require('../person/users/students/junior');
+const library = require('../library/library');
+const givenBook = require('../borrower_catalog/givenBooks');
+const details = require('../request_file/requestDetails');
+const bookRequest = require('../request_file/request');
 
-//Tests the Person Function
-describe('1. Tests the Person Module', () => {
-    test('Person constructor', () => {
-        const obj = new Person('Zik');
-        expect(obj.name).toBe('Zik');
+//Tests the requestBook Function
+describe('1. Tests the requestBook', () => {
+    test('checks if the Teacher\'s Request is added to the bookRequest-Teacher array', () => {
+        const Ikedi = new Teacher('Zik', 'Teacher');
+        Ikedi.requestBook('War-Ship');
+        expect(bookRequest[0].includes('War-Ship')).toBeTruthy();
+    });
+    test('checks if the Senior\'s Request is added to the bookRequest-Senior array', () => {
+        const Isaac = new Senior('Isaac', 'Senior');
+        Isaac.requestBook('Node Handbook');
+        expect(bookRequest[1].includes('Node Handbook')).toBeTruthy();
+    });
+    test('checks if the Junior\'s Request is added to the bookRequest Junior array', () => {
+        const Bola = new Junior('Bola', 'Junior');
+        Bola.requestBook('Terminator');
+        expect(bookRequest[2].includes('Terminator')).toBeTruthy();
     });
 });
 
-//Tests the Admin Function
-describe('2. Tests the Admin Module', () => {
-    test('Admin constructor', () => {
-        const obj = new Admin('Zik', 'Admin');
-        expect(obj.name).toBe('Zik');
-        expect(obj.type).toBe('Admin');
+//Tests the returnBook Function
+describe('2. Tests the returnBook', () => {
+    test('checks if when a Teacher returns a book, that the book is been removed from the givenBooks array', () => {
+        const Ikedi = new Teacher('Ikedi', 'Teacher');
+        const Zaki = new Admin('Zaki', 'Admin');
+
+        Ikedi.requestBook('Alice');
+        Zaki.handleRequest();
+        Ikedi.returnBook('Alice');
+        expect(givenBook['Ikedi'].includes('Alice')).toBeFalsy();
+    });
+    test('checks if the User can return a book not gotten from the library', () => {
+        const Chioma = new Senior('Chioma', 'Senior');
+        const Nnamdi = new Admin('Nnamdi', 'Admin');
+        expect(Chioma.returnBook('G.O.T')).toEqual(`Chioma, this book is not from the Library`);
     });
 });
 
-//Tests the Teacher Function
-describe('3. Tests the Teacher Module', () => {
-    test('Teacher constructor', () => {
-        const obj = new Teacher('Zik', 'Teacher');
-        expect(obj.name).toBe('Zik');
-        expect(obj.type).toBe('Teacher');
+//Tests the addBook function
+describe('3. Tests the addBook Function', () => {
+    test('checks if the Admin can add books to the library', () => {
+        const Nnamdi = new Admin('Nnamdi', 'Admin');
+        Nnamdi.addBook('Phone-Boot', 5);
+        expect(library['Phone-Boot']).toBe(5);
     });
 });
 
-//Tests the User function
-describe('4. Tests the User Module', () => {
-    test('User constructor', () => {
-        const obj = new User('Chibueze', 'Admin');
-        expect(obj.name).toBe('Chibueze');
-    });
-});
+//Tests the handleRequest function
+describe('4. Tests the handleRequest function', () => {
+    test('checks if when Teacher got a particular Book remaining one before a student', () => {
+        const Lucky = new Teacher('Lucky', 'Teacher');
+        const Smart = new Junior('Smart', 'Junior');
+        const Mercy = new Admin('Mercy', 'Admin');
 
-//Tests the Student Function
-describe('5. Tests the Student Module', () => {
-    test('Student constructor', () => {
-        const obj = new Student('Zik', 'Teacher');
-        expect(obj.name).toBe('Zik');
-        expect(obj.type).toBe('Teacher');
-    });
-});
-
-//Tests the Senior Function
-describe('6. Tests the Senior Module', () => {
-    test('Senior constructor', () => {
-        const obj = new Senior('Zik', 'Senior');
-        expect(obj.name).toBe('Zik');
-        expect(obj.type).toBe('Senior');
-    });
-});
-
-//Tests the Junior Function
-describe('7. Tests the Junior Module', () => {
-    test('Junior constructor', () => {
-        const obj = new Junior('Zik', 'Junior');
-        expect(obj.name).toBe('Zik');
-        expect(obj.type).toBe('Junior');
+        Mercy.addBook('Legend', 1);
+        Smart.requestBook('Legend');
+        Lucky.requestBook('Legend');
+        Mercy.handleRequest();
+        expect(details[0].includes('Lucky')).toBeTruthy();
     });
 });
