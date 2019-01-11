@@ -8,6 +8,7 @@ const details = require('./request_file/requestDetails');
 //an instance of Teacher
 const David = new Teacher('David', 'Teacher');
 David.req('War-Ship');
+David.req('Alice');
 
 //an instance of Junior Student
 const Dare = new Junior('Dare', 'Junior');
@@ -32,4 +33,3 @@ var kingsley = new Admin('Kingsley', 'Admin');
 kingsley.addBook('Yellow Sun', 5);
 
 kingsley.handleRequest();
-console.log(David.borrowed);
