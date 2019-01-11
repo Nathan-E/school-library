@@ -1,0 +1,22 @@
+{
+  "name": "school-library",
+  "version": "1.0.0",
+  "description": "Checkpoint-One",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathan-E/school-library.git"
+  },
+  "author": "Chibueze",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nathan-E/school-library/issues"
+  },
+  "homepage": "https://github.com/Nathan-E/school-library#readme",
+  "dependencies": {
+    "jest": "^23.6.0"
+  }
+}
