@@ -1,5 +1,5 @@
-const User = require('./user');
-const Admin = require('./admin');
+const User = require('./person/users/user');
+const Admin = require('./person/users/admin/admin');
 const Teacher = require('./teacher');
 const Senior = require('./senior');
 const Junior = require('./junior');
