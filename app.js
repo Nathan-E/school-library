@@ -1,9 +1,9 @@
-const User = require('./user');
-const Admin = require('./admin');
-const Teacher = require('./teacher');
-const Senior = require('./senior');
-const Junior = require('./junior');
-const library = require('./library');
+const User = require('./person/users/user');
+const Admin = require('./person/admin/admin');
+const Teacher = require('./person/users/teacher/teacher');
+const Senior = require('./person/users/students/senior');
+const Junior = require('./person/users/students/junior');
+const library = require('./library/library');
 
 
 
