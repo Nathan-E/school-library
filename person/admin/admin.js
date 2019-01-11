@@ -3,7 +3,7 @@ const extend = require('../../extend/extend');
 const library = require('../../library/library');
 const bookRequest = require('../../request_file/request');
 const details = require('../../request_file/requestDetails');
-const borrowerList = require('../../borrower_catalog/catalog');
+const givenBooks = require('../../borrower_catalog/catalog');
 
 //Admin constructor function
 function Admin(name, type){
@@ -21,7 +21,7 @@ Admin.prototype.addBook = function(name, quantity){
 //handles book request and updates the library
 Admin.prototype.handleRequest = function (){
     let result = [];
-    let givenBooks = {};
+    // let givenBooks = {};
     for(let i = 0; i < bookRequest.length; i++){
         for(let j = 0; j < bookRequest[i].length; j++){
             if(library[bookRequest[i][j]]){
@@ -42,7 +42,7 @@ Admin.prototype.handleRequest = function (){
             }
         }
     }
-    console.log(result, givenBooks);
+    console.log(result);
 }
 
 module.exports = Admin;

@@ -3,6 +3,7 @@ const extend = require('../../extend/extend');
 const bookRequest = require('../../request_file/request');
 const details = require('../../request_file/requestDetails');
 const library = require('../../library/library');
+const givenBooks = require('../../borrower_catalog/catalog')
 
 //User constructor (Parent function)
 function User(name) {
@@ -13,26 +14,35 @@ function User(name) {
 extend(User, Person);
 
 //req function sent a book request to the bookRequest array
-User.prototype.req = function (name){
+User.prototype.reqestBook = function (name){
     if(this.type == 'Teacher') {
         details[0].push(this.name);
         bookRequest[0].push(name);
-        // this.borrowed.push(name);
       }
     if(this.type == 'Senior'){
         details[1].push(this.name);
         bookRequest[1].push(name);
-        // this.borrowed.push(name);
       }
     if (this.type == 'Junior'){
         details[2].push(this.name);
         bookRequest[2].push(name);
-        // this.borrowed.push(name);
     }
 }
 
-User.prototype.returnBook = function (name) {
-    
+User.prototype.returnBook = function (book) {
+    if(givenBooks[this.name].includes(book)){
+        // for (const prop in givenBooks) {
+            // if(this.name == prop && givenBooks[prop].includes(book)){
+                const a = givenBooks[this.name].indexOf(book);
+                givenBooks[this.name].splice(a, 1);
+                library[book]++;
+            // }
+        // }
+    }
+    else{
+        console.log(`${this.name}, this book is not from the Library`);
+    }
 }
+
 
 module.exports = User;

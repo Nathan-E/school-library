@@ -1,3 +1,3 @@
-let borrowerList = {};
+let givenBooks = {};
 
-module.exports = borrowerList;
+module.exports = givenBooks;
