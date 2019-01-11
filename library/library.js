@@ -1,5 +1,5 @@
 //Book object holds all the books
-var library = {
+let library = {
     'War-Ship': 6,
     'Alice': 10,
     'Lucy': 1,

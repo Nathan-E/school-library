@@ -32,7 +32,4 @@ var kingsley = new Admin('Kingsley', 'Admin');
 kingsley.addBook('Yellow Sun', 5);
 
 kingsley.handleRequest();
-
-console.log(details);
-console.log(bookRequest);
 console.log(David.borrowed);

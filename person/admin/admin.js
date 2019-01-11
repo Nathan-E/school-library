@@ -20,7 +20,7 @@ Admin.prototype.addBook = function(name, quantity){
 
 //handles book request and updates the library
 Admin.prototype.handleRequest = function (){
-    var result = [];
+    let result = [];
     for(let i = 0; i < bookRequest.length; i++){
         for(let j = 0; j < bookRequest[i].length; j++){
             if(library[bookRequest[i][j]]){
