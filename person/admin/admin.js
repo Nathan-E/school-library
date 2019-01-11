@@ -3,7 +3,7 @@ const extend = require('../../extend/extend');
 const library = require('../../library/library');
 const bookRequest = require('../../request_file/request');
 const details = require('../../request_file/requestDetails');
-const givenBooks = require('../../borrower_catalog/catalog');
+const givenBooks = require('../../borrower_catalog/givenBooks');
 
 //Admin constructor function
 function Admin(name, type){
@@ -42,7 +42,7 @@ Admin.prototype.handleRequest = function (){
             }
         }
     }
-    console.log(result);
+    return result;
 }
 
 module.exports = Admin;
