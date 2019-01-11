@@ -1,10 +1,10 @@
-const User = require('./user');
-const Admin = require('./admin');
-const Person = require('./person');
-const Teacher = require('./teacher');
-const Student = require('./student');
-const Senior = require('./senior');
-const Junior = require('./junior');
+const User = require('../person/users/user');
+const Admin = require('../person/admin/admin');
+const Person = require('../person/person');
+const Teacher = require('../person/users/teacher/teacher');
+const Student = require('../person/users/students/student');
+const Senior = require('../person/users/students/senior');
+const Junior = require('../person/users/students/junior');
 
 //Tests the Person Function
 describe('1. Tests the Person Module', () => {
