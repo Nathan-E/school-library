@@ -1,14 +1,9 @@
 const User = require('./person/users/user');
-const Admin = require('./person/users/admin/admin');
-const Teacher = require('./teacher');
-const Senior = require('./senior');
-const Junior = require('./junior');
-const library = require('./library');
-
-
-
-
-
+const Admin = require('./person/admin/admin');
+const Teacher = require('./person/users/teacher/teacher');
+const Senior = require('./person/users/students/senior');
+const Junior = require('./person/users/students/junior');
+const library = require('./library/library');
 
 //an instance of Teacher
 const David = new Teacher('David', 'Teacher');
@@ -32,6 +27,7 @@ Kazeem.req('Lucy');
 
 //an instance of Admin
 var kingsley = new Admin('Kingsley', 'Admin');
+
 kingsley.addBook('Yellow Sun', 5);
 
 kingsley.handleRequest();

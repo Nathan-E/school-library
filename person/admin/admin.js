@@ -1,8 +1,8 @@
-const Person = require('../../person');
-const extend = require('../../../extend');
-const library = require('../../../library');
-const bookRequest = require('../../../request');
-const details = require('../../../requestDetails');
+const Person = require('../person');
+const extend = require('../../extend/extend');
+const library = require('../../library/library');
+const bookRequest = require('../../request_file/request');
+const details = require('../../request_file/requestDetails');
 
 //Admin constructor function
 function Admin(name, type){
@@ -17,6 +17,7 @@ Admin.prototype.addBook = function(name, quantity){
     library[name] = quantity;
 }
 
+//handles book request and updates the library
 Admin.prototype.handleRequest = function (){
     var result = {};
     for(let i = 0; i < bookRequest.length; i++){

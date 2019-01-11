@@ -1,5 +1,5 @@
-const User = require('./person/users/user');
-const extend = require('./extend');
+const User = require('../user');
+const extend = require('../../../extend/extend');
 
 //Teacher constructor (Parent function)
 function Teacher(name, type) {

@@ -1,8 +1,8 @@
 const Person = require('../person');
-const extend = require('../../extend');
-const bookRequest = require('../../request');
-const details = require('../../requestDetails');
-const library = require('../../library');
+const extend = require('../../extend/extend');
+const bookRequest = require('../../request_file/request');
+const details = require('../../request_file/requestDetails');
+const library = require('../../library/library');
 
 //User constructor (Parent function)
 function User(name) {
