@@ -5,11 +5,6 @@ const Senior = require('./person/users/students/senior');
 const Junior = require('./person/users/students/junior');
 const library = require('./library/library');
 
-
-
-
-
-
 //an instance of Teacher
 const David = new Teacher('David', 'Teacher');
 David.req('War-Ship');
@@ -32,6 +27,7 @@ Kazeem.req('Lucy');
 
 //an instance of Admin
 var kingsley = new Admin('Kingsley', 'Admin');
+
 kingsley.addBook('Yellow Sun', 5);
 
 kingsley.handleRequest();
