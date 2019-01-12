@@ -36,11 +36,13 @@ kingsley.addBook('Yellow Sun', 5);
 
 
 // console.log(kingsley.handleRequest());
-console.log(givenBooks);
-console.log(details);
+// console.log(givenBooks);
+// console.log(details);
 // David.returnBook('Alice');
-kingsley.handleRequest()
+kingsley.handleRequest();
+kingsley.addBook('Alice', 20);
+Kazeem.returnBook('Lucy');
 // David.returnBook('Alice');
-// console.log(library);
-console.log(givenBooks);
-console.log(bookRequest);
+console.log(library);
+console.log(givenBooks.David);
+// console.log(bookRequest);
