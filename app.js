@@ -4,8 +4,6 @@ const Senior = require('./person/users/students/senior');
 const Junior = require('./person/users/students/junior');
 const library = require('./library/library');
 const givenBooks = require('./borrower_catalog/givenBooks');
-const bookRequest = require('./request_file/request')
-const details = require('./request_file/requestDetails')
 
 //an instance of Teacher
 const David = new Teacher('David', 'Teacher');
@@ -34,15 +32,12 @@ var kingsley = new Admin('Kingsley', 'Admin');
 
 kingsley.addBook('Yellow Sun', 5);
 
-
-// console.log(kingsley.handleRequest());
-// console.log(givenBooks);
-// console.log(details);
-// David.returnBook('Alice');
 kingsley.handleRequest();
-kingsley.addBook('Alice', 20);
-Kazeem.returnBook('Lucy');
-// David.returnBook('Alice');
 console.log(library);
-console.log(givenBooks.David);
-// console.log(bookRequest);
+console.log(givenBooks);
+David.returnBook('Alice');
+kingsley.addBook('Alice', 20);
+David.returnBook('Alice');
+console.log(library);
+console.log(givenBooks);
+
