@@ -36,7 +36,7 @@ kingsley.handleRequest();
 console.log(library);
 console.log(givenBooks);
 David.returnBook('Alice');
-kingsley.addBook('Alice', 20);
+kingsley.addBook('Alice', 25);
 David.returnBook('Alice');
 console.log(library);
 console.log(givenBooks);
