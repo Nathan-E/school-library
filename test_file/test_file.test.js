@@ -83,15 +83,53 @@ describe('3. Testing the Request Book Function', () => {
         expect(details[0]).toContain('Austin');
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
-        Eniola.requestBook('Lucy');
-        expect(bookRequest[1]).toContain('Lucy');
+        Eniola.requestBook('Alice');
+        expect(bookRequest[1]).toContain('Alice');
         expect(details[1]).toContain('Eniola');
     });
     test('Ensures a Junior Student can request for a book from the library', () => {
-        Dare.requestBook('The Hobbit');
-        expect(bookRequest[2]).toContain('The Hobbit');
+        Dare.requestBook('Alice');
+        expect(bookRequest[2]).toContain('Alice');
         expect(details[2]).toContain('Dare');
     });
+});
+
+describe('4. Testing the handleRequest function', () => {
+    test('Ensures an Admin can issue books in the library', () => {
+        Kingsley.handleRequest();
+        expect(givenBook['Austin']).toContain('Alice');
+    });
+    test('Ensures an Admin cannot issue books not in the library', () => {
+        Nnamdi.requestBook('Growth');
+        Kingsley.handleRequest();
+        expect(givenBook['Nnamdi']).not.toContain('Growth');
+    });
+    test('Ensures an Admin issues a book remaining one copy based on the first request from teachers', () => {
+        Kingsley.addBook('World', 1);
+        David.requestBook('World');
+        Austin.requestBook('World');
+        Kingsley.handleRequest();
+        expect(givenBook['David']).toContain('World');
+        expect(givenBook['Austin']).not.toContain('World');
+    });
+    test('Ensures an Admin issues a book remaining one copy based on the first request from Senior Students', () => {
+        Kingsley.addBook('World', 1);
+        Ekene.requestBook('World');
+        Eniola.requestBook('World');
+        Kingsley.handleRequest();
+//ensure you make sure ekene gets her book
+        expect(givenBook['Ekene']).toContain('World');
+        expect(givenBook['Eniola']).not.toContain('World');
+    });
+//     test('Ensures an Admin issues a book remaining one copy to the Teacher before any student', () => {
+//         Kingsley.addBook('World', 1);
+//         Ekene.requestBook('World');
+//         Eniola.requestBook('World');
+//         Kingsley.handleRequest();
+// //ensure you make sure ekene gets her book
+//         expect(givenBook['Ekene']).toContain('World');
+//         expect(givenBook['Eniola']).not.toContain('World');
+//     });
 });
 
 

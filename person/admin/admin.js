@@ -34,12 +34,15 @@ Admin.prototype.handleRequest = function () {
     for (let i = 0; i < bookRequest.length; i++) {
         for (let j = 0; j < bookRequest[i].length; j++) {
             //checks if the book requested is in the library
-            if (library[bookRequest[i][j]]) {
+            if (library[bookRequest[i][j]] && !givenBooks[details[i][j]].includes(bookRequest[i][j])) {
                 result.push(`${details[i][j]} collected ${bookRequest[i][j]}`);
                 //decreases the number of the book requested in the library
                 library[bookRequest[i][j]]--;
                 //adds the users name and the book collected to the givenBook array
                 givenBooks[details[i][j]].push(bookRequest[i][j]);
+                //handles the request if the user have collected the book before
+            } else if (givenBooks[details[i][j]].includes(bookRequest[i][j])){
+                result.push(`${details[i][j]}, you cannot collect ${bookRequest[i][j]} twice`);
                 //handles the request when the quantity of the book is zero   
             } else if (library[bookRequest[i][j]] == 0) {
                 result.push(`${details[i][j]}, ${bookRequest[i][j]} has been taken`);

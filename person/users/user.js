@@ -15,6 +15,8 @@ function User(name) {
 //ensures prototype chaining to parent Person
 extend(User, Person);
 
+
+
 //request function sent the book requested to the bookRequest array
 User.prototype.requestBook = function (name) {
     //check if the request is from a Teacher and then pushes the request to bookRequest Teacher's array
