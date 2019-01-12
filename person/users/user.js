@@ -43,7 +43,6 @@ User.prototype.returnBook = function (book) {
         givenBooks[this.name].splice(a, 1);
         //add the book back to the library
         library[book]++;
-        
         return `${library[book]} returned`;
     } 
     // if the user was not given the book, tells the user that the book is not from the library
