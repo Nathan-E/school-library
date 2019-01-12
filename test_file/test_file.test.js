@@ -76,6 +76,24 @@ describe('2. Test the add book function', () => {
     });
 });
 
+describe('3. Testing the Request Book Function', () => {
+    test('Ensures a Teacher can request for a book from the library', () => {
+        Austin.requestBook('Alice');
+        expect(bookRequest[0]).toContain('Alice');
+        expect(details[0]).toContain('Austin');
+    });
+    test('Ensures a Senior Student can request for a book from the library', () => {
+        Eniola.requestBook('Lucy');
+        expect(bookRequest[1]).toContain('Lucy');
+        expect(details[1]).toContain('Eniola');
+    });
+    test('Ensures a Junior Student can request for a book from the library', () => {
+        Dare.requestBook('The Hobbit');
+        expect(bookRequest[2]).toContain('The Hobbit');
+        expect(details[2]).toContain('Dare');
+    });
+});
+
 
 // //Tests the requestBook Function
 // describe('1. Tests the requestBook', () => {
