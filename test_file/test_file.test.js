@@ -1,8 +1,5 @@
-const User = require('../person/users/user');
 const Admin = require('../person/admin/admin');
-const Person = require('../person/person');
 const Teacher = require('../person/users/teacher/teacher');
-const Student = require('../person/users/students/student');
 const Senior = require('../person/users/students/senior');
 const Junior = require('../person/users/students/junior');
 const library = require('../library/library');
@@ -67,6 +64,19 @@ describe('4. Tests the handleRequest function', () => {
         Smart.requestBook('Legend');
         Lucky.requestBook('Legend');
         Mercy.handleRequest();
-        expect(details[0].includes('Lucky')).toBeTruthy();
+        expect(givenBook['Lucky'].includes('Legend')).toBeTruthy();
+
+    });
+    test('checks if a student did not get a particular Book because a Teacher request for it latter', () => {
+        const Chika = new Teacher('Chika', 'Teacher');
+        const Me = new Junior('Me', 'Junior');
+        const Joy = new Admin('Joy', 'Admin');
+
+        Joy.addBook('Legends', 1);
+        Me.requestBook('Legends');
+        Chika.requestBook('Legends');
+        Joy.handleRequest();
+        expect(givenBook['Me'].includes('Legends')).toBeFalsy();
+
     });
 });

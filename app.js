@@ -35,12 +35,12 @@ var kingsley = new Admin('Kingsley', 'Admin');
 kingsley.addBook('Yellow Sun', 5);
 
 
-kingsley.handleRequest();
-// console.log(library);
-// console.log(givenBooks);
+// console.log(kingsley.handleRequest());
+console.log(givenBooks);
+console.log(details);
 // David.returnBook('Alice');
+kingsley.handleRequest()
 // David.returnBook('Alice');
 // console.log(library);
-// console.log(givenBooks);
-// console.log(details[0].includes('David'));
-
+console.log(givenBooks);
+console.log(bookRequest);

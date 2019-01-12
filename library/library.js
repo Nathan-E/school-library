@@ -5,6 +5,6 @@ let library = {
     'Lucy': 1,
     'The Hobbit': 0,
     'Avengers': 1
-    };
+};
 
 module.exports = library;

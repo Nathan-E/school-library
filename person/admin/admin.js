@@ -6,38 +6,43 @@ const details = require('../../request_file/requestDetails');
 const givenBooks = require('../../borrower_catalog/givenBooks');
 
 //Admin constructor function
-function Admin(name, type){
+function Admin(name, type) {
     Person.call(this, name);
     this.type = type;
 }
 
+//ensures prototype chaining
 extend(Admin, Person);
 
 //Add books to the books object
-Admin.prototype.addBook = function(name, quantity){
-    library[name] = quantity;
+Admin.prototype.addBook = function (name, quantity) {
+    if(library[name]){
+        library[name] += quantity;
+    }
+    else{
+        library[name] += quantity;
+    }
 }
 
 //handles book request and updates the library
-Admin.prototype.handleRequest = function (){
+Admin.prototype.handleRequest = function () {
+    //result holds detail of book request 
     let result = [];
-    // let givenBooks = {};
-    for(let i = 0; i < bookRequest.length; i++){
-        for(let j = 0; j < bookRequest[i].length; j++){
-            if(library[bookRequest[i][j]]){
+    //loops through the requested book array
+    for (let i = 0; i < bookRequest.length; i++) {
+        for (let j = 0; j < bookRequest[i].length; j++) {
+            //checks if the book requested is in the library
+            if (library[bookRequest[i][j]]) {
                 result.push(`${details[i][j]} collected ${bookRequest[i][j]}`);
+                //decreases the number of the book requested in the library
                 library[bookRequest[i][j]]--;
-                if(!givenBooks[details[i][j]]){
-                    givenBooks[details[i][j]] = [bookRequest[i][j]];
-                }
-                else{
-                    givenBooks[details[i][j]].push(bookRequest[i][j]);
-                }
-            }
-            else if(library[bookRequest[i][j]] == 0){
+                //adds the users name and the book collected to the givenBook array
+                givenBooks[details[i][j]].push(bookRequest[i][j]);
+             //handles the request when the quantity of the book is zero   
+            } else if (library[bookRequest[i][j]] == 0) {
                 result.push(`${details[i][j]}, ${bookRequest[i][j]} has been taken`);
-            }
-            else{
+            //handles the request when the library never had the book    
+            } else {
                 result.push(`${details[i][j]}, ${bookRequest[i][j]} is not available`);
             }
         }
