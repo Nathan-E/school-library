@@ -1,45 +1,75 @@
 const Person = require('../person');
 const extend = require('../../extend/extend');
-const bookRequest = require('../../request_file/request');
-const details = require('../../request_file/requestDetails');
+const requestCatalog = require('../../request_file/request');
 const library = require('../../library/library');
-const givenBooks = require('../../borrower_catalog/givenBooks')
+const givenBooks = require('../../borrower_catalog/givenBooks');
 
-//User constructor (Parent function)
+
+//User constructor (Parent function), givenBooks holds the books collected by the user
 function User(name) {
     Person.call(this, name);
-    this.borrowed = [];
+    givenBooks[this.name] = [];
 }
 
+//ensures prototype chaining to parent Person
 extend(User, Person);
 
-//req function sent a book request to the bookRequest array
-User.prototype.requestBook = function (name){
-    if(this.type == 'Teacher') {
-        details[0].push(this.name);
-        bookRequest[0].push(name);
-      }
-    if(this.type == 'Senior'){
-        details[1].push(this.name);
-        bookRequest[1].push(name);
-      }
-    if (this.type == 'Junior'){
-        details[2].push(this.name);
-        bookRequest[2].push(name);
+
+
+//request function sent the book requested to the bookRequest array
+User.prototype.requestBook = function (book) {
+    that = this;
+    //check if the request is from a Teacher and then pushes the request to bookRequest Teacher's array
+    let found = requestCatalog[that.type].find( function (element) {
+        return element[0] == that.name && element[1] == book;
+    });
+    if(!found) {
+        requestCatalog[that.type].push([that.name, book]);
     }
 }
 
 //returns Book to the library and remmoves it from givenBook record
 User.prototype.returnBook = function (book) {
-    if(givenBooks[this.name] && givenBooks[this.name].includes(book)){
+    that = this;
+    //checks if the user was given the book 
+    if (givenBooks[this.name].includes(book)) {
         const a = givenBooks[this.name].indexOf(book);
+        //removes the book from the list of books given to the user
         givenBooks[this.name].splice(a, 1);
+        //add the book back to the library
         library[book]++;
+        if(this.type == 'Teacher'){
+            for(let i = 0; i< requestCatalog[this.type].length; i++){
+                if(requestCatalog[this.type][i][0] == this.name && requestCatalog[this.type][i][1] == book){
+                    const index = requestCatalog[this.type].indexOf(requestCatalog[this.type][i])
+                    //removes the book from the book requested list
+                    requestCatalog[this.type].splice(index, 1);
+                }
+            }
+        }
+        if(this.type == 'Senior'){
+            for(let i = 0; i< requestCatalog[this.type].length; i++){
+                if(requestCatalog[this.type][i][0] == this.name && requestCatalog[this.type][i][1] == book){
+                    const index = requestCatalog[this.type].indexOf(requestCatalog[this.type][i])
+                    //removes the book from the book requested list
+                    requestCatalog[this.type].splice(index, 1);
+                }
+            }
+        }
+        if(this.type == 'Junior'){
+            for(let i = 0; i< requestCatalog[this.type].length; i++){
+                if(requestCatalog[this.type][i][0] == this.name && requestCatalog[this.type][i][1] == book){
+                    const index = requestCatalog[this.type].indexOf(requestCatalog[this.type][i])
+                    //removes the book from the book requested list
+                    requestCatalog[this.type].splice(index, 1);
+                }
+            }
+        }
         return `${library[book]} returned`;
-    }
-    else{
-        // console.log(`${this.name}, this book is not from the Library`);
-        return `${this.name}, this book is not from the Library`;
+    } 
+    // if the user was not given the book, tells the user that the book is not from the library
+    else {
+        return `${this.name}, ${book} is not from the Library`;
     }
 }
 
