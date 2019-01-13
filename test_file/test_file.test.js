@@ -77,13 +77,12 @@ describe('2. Test the add book function', () => {
 });
 
 describe('3. Testing the Request Book Function', () => {
-    test('Ensures a Teacher can request for a book from the library', () => {
-        Austin.requestBook('Alice');
+    test('Ensures a Teacher should not have a book not requested from the library', () => {
+        // Austin.requestBook('Alice');
         let found = requestCatalog['Teachers'].find( function (element) {
-            return element[0] == that.name && element[1] == 'Alice';
+            return element[0] == 'Austin' && element[1] == 'Alice';
         });
-        expect(found[0]).toBe('Austin');
-        expect(found[1]).toBe('Alice');
+        expect(found).toBeFalsy();
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
         Eniola.requestBook('Alice');
@@ -101,12 +100,16 @@ describe('3. Testing the Request Book Function', () => {
         expect(found[0]).toBe('Dare');
         expect(found[1]).toBe('Alice');
     });
+    // test('Ensures when a User request for a book, the request get logged to the requestCatalog', () => {
+    //     Dare.requestBook()
+    // });
 });
 
 describe('4. Testing the handleRequest function', () => {
     test('Ensures an Admin can issue books in the library', () => {
+        Austin.requestBook('War-Ship');
         Kingsley.handleRequest();
-        expect(givenBook['Austin']).toContain('Alice');
+        expect(givenBook['Austin']).toContain('War-Ship');
     });
     test('Ensures an Admin cannot issue books not in the library', () => {
         Nnamdi.requestBook('Growth');
@@ -157,8 +160,36 @@ describe('4. Testing the handleRequest function', () => {
     });
 });
 
-describe('Test the returnBook function', () => {
-    test('Test if a user can return Book borrowed back to the Library', () => {
-        
+describe('5. Testing the returnBook function', () => {
+    test('Ensure a user can return a Book borrowed, to the Library', () => {
+        Kingsley.addBook('Returned', 1);
+        Austin.requestBook('Returned');
+        Kingsley.handleRequest();
+        expect(library['Returned']).toBe(0);
+        Austin.returnBook('Returned');
+        expect(library['Returned']).toBe(1);
     });    
+    test('Ensure a user does not have a book after returning it', () => {
+        Kingsley.addBook('Wonders', 10);
+        Dare.requestBook('Wonders');
+        Kingsley.handleRequest();
+        Dare.returnBook('Wonders');
+        expect(givenBook['Dare']).not.toContain('Wonders');
+    });
+    test('Ensures a user cannot return a book not taken fro the library', () => {
+        expect(Dare.returnBook('Terminal')).toBe('Dare, Terminal is not from the Library');
+    });
+    test('Ensure when a user returns a book, the user\'s detail leaves the requested books list', () => {
+        Kingsley.addBook('Jack the Gaint Slayer', 2);
+        Ekene.requestBook('Jack the Gaint Slayer');
+        
+        // console.log(requestCatalog['Seniors']);
+        Kingsley.handleRequest();
+        Ekene.returnBook('Jack the Gaint Slayer');
+        // console.log(requestCatalog['Seniors']);
+        let found = requestCatalog['Seniors'].find( function (element) {
+            return element[0] == 'Ekene' && element[1] == 'Jack the Gaint Slayer';
+        });
+        expect(found).toBeFalsy();
+    });
 });

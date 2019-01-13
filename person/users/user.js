@@ -65,9 +65,8 @@ User.prototype.returnBook = function (book) {
         if (this.type == 'Teacher') {
             for(let i =0 ; i < requestCatalog['Teachers'].length; i++){
                 if (requestCatalog['Teachers'][i][0] == this.name && requestCatalog['Teachers'][i][1] == book){
-                    console.log(requestCatalog['Teachers']);
                     requestCatalog['Teachers'].splice(i, 1);
-                    console.log(requestCatalog['Teachers']);                }
+                }
             }
         }
         //check if the request is from a Senior and then pushes the request to bookRequest Senior's array
@@ -90,7 +89,7 @@ User.prototype.returnBook = function (book) {
     } 
     // if the user was not given the book, tells the user that the book is not from the library
     else {
-        return `${this.name}, this book is not from the Library`;
+        return `${this.name}, ${book} is not from the Library`;
     }
 }
 
