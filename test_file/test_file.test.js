@@ -8,7 +8,7 @@ const Junior = require('../person/users/students/junior');
 const library = require('../library/library');
 const givenBook = require('../borrower_catalog/givenBooks');
 const details = require('../request_file/requestDetails');
-const bookRequest = require('../request_file/request');
+const requestCatalog = require('../request_file/request');
 
 //an instance of Admin
 var Kingsley = new Admin('Kingsley', 'Admin');
@@ -79,18 +79,27 @@ describe('2. Test the add book function', () => {
 describe('3. Testing the Request Book Function', () => {
     test('Ensures a Teacher can request for a book from the library', () => {
         Austin.requestBook('Alice');
-        expect(bookRequest[0]).toContain('Alice');
-        expect(details[0]).toContain('Austin');
+        let found = requestCatalog['Teachers'].find( function (element) {
+            return element[0] == that.name && element[1] == 'Alice';
+        });
+        expect(found[0]).toBe('Austin');
+        expect(found[1]).toBe('Alice');
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
         Eniola.requestBook('Alice');
-        expect(bookRequest[1]).toContain('Alice');
-        expect(details[1]).toContain('Eniola');
+        let found = requestCatalog['Seniors'].find( function (element) {
+            return element[0] == that.name && element[1] == 'Alice';
+        });
+        expect(found[0]).toBe('Eniola');
+        expect(found[1]).toBe('Alice');
     });
     test('Ensures a Junior Student can request for a book from the library', () => {
         Dare.requestBook('Alice');
-        expect(bookRequest[2]).toContain('Alice');
-        expect(details[2]).toContain('Dare');
+        let found = requestCatalog['Juniors'].find( function (element) {
+            return element[0] == that.name && element[1] == 'Alice';
+        });
+        expect(found[0]).toBe('Dare');
+        expect(found[1]).toBe('Alice');
     });
 });
 
@@ -113,96 +122,43 @@ describe('4. Testing the handleRequest function', () => {
         expect(givenBook['Austin']).not.toContain('World');
     });
     test('Ensures an Admin issues a book remaining one copy based on the first request from Senior Students', () => {
-        Kingsley.addBook('World', 1);
-        Ekene.requestBook('World');
-        Eniola.requestBook('World');
+        Kingsley.addBook('Ape Land', 1);
+        Ekene.requestBook('Ape Land');
+        Eniola.requestBook('Ape Land');
         Kingsley.handleRequest();
-//ensure you make sure ekene gets her book
-        expect(givenBook['Ekene']).toContain('World');
-        expect(givenBook['Eniola']).not.toContain('World');
+        expect(givenBook['Ekene']).toContain('Ape Land');
+        expect(givenBook['Eniola']).not.toContain('Ape Land');
     });
-//     test('Ensures an Admin issues a book remaining one copy to the Teacher before any student', () => {
-//         Kingsley.addBook('World', 1);
-//         Ekene.requestBook('World');
-//         Eniola.requestBook('World');
-//         Kingsley.handleRequest();
-// //ensure you make sure ekene gets her book
-//         expect(givenBook['Ekene']).toContain('World');
-//         expect(givenBook['Eniola']).not.toContain('World');
-//     });
+    test('Ensures an Admin issues a book remaining one copy based on the first request from Senior Students', () => {
+        Kingsley.addBook('Politics', 1);
+        Nnamdi.requestBook('Politics');
+        Dare.requestBook('Politics');
+        Kingsley.handleRequest();
+        expect(givenBook['Nnamdi']).toContain('Politics');
+        expect(givenBook['Dare']).not.toContain('Politics');
+    });
+    test('Ensures an Admin issues a book remaining one copy to Teachers before students, even when the students ordered first', () => {
+        Kingsley.addBook('Luminous', 1);
+        Dare.requestBook('Luminous');
+        Ekene.requestBook('Luminous');
+        David.requestBook('Luminous');
+        Kingsley.handleRequest();
+        expect(givenBook['David']).toContain('Luminous');
+        expect(givenBook['Ekene']).not.toContain('Luminous');
+        expect(givenBook['Dare']).not.toContain('Luminous');
+    });
+    test('Ensures an Admin issues a book remaining one copy to Senior Students before Juniors, even when the Junior student ordered first', () => {
+        Kingsley.addBook('Love', 1);
+        Nnamdi.requestBook('Love');
+        Eniola.requestBook('Love');
+        Kingsley.handleRequest();
+        expect(givenBook['Eniola']).toContain('Love');
+        expect(givenBook['Nnamdi']).not.toContain('Love');
+    });
 });
 
-
-// //Tests the requestBook Function
-// describe('1. Tests the requestBook', () => {
-//     test('checks if the Teacher\'s Request is added to the bookRequest-Teacher array', () => {
-//         const Ikedi = new Teacher('Zik', 'Teacher');
-//         Ikedi.requestBook('War-Ship');
-//         expect(bookRequest[0].includes('War-Ship')).toBeTruthy();
-//     });
-//     test('checks if the Senior\'s Request is added to the bookRequest-Senior array', () => {
-//         const Isaac = new Senior('Isaac', 'Senior');
-//         Isaac.requestBook('Node Handbook');
-//         expect(bookRequest[1].includes('Node Handbook')).toBeTruthy();
-//     });
-//     test('checks if the Junior\'s Request is added to the bookRequest Junior array', () => {
-//         const Bola = new Junior('Bola', 'Junior');
-//         Bola.requestBook('Terminator');
-//         expect(bookRequest[2].includes('Terminator')).toBeTruthy();
-//     });
-// });
-
-// //Tests the returnBook Function
-// describe('2. Tests the returnBook', () => {
-//     test('checks if when a Teacher returns a book, that the book is been removed from the givenBooks array', () => {
-//         const Ikedi = new Teacher('Ikedi', 'Teacher');
-//         const Zaki = new Admin('Zaki', 'Admin');
-
-//         Ikedi.requestBook('Alice');
-//         Zaki.handleRequest();
-//         Ikedi.returnBook('Alice');
-//         expect(givenBook['Ikedi'].includes('Alice')).toBeFalsy();
-//     });
-//     test('checks if the User can return a book not gotten from the library', () => {
-//         const Chioma = new Senior('Chioma', 'Senior');
-//         const Nnamdi = new Admin('Nnamdi', 'Admin');
-//         expect(Chioma.returnBook('G.O.T')).toEqual(`Chioma, this book is not from the Library`);
-//     });
-// });
-
-// //Tests the addBook function
-// describe('3. Tests the addBook Function', () => {
-//     test('checks if the Admin can add books to the library', () => {
-//         const Nnamdi = new Admin('Nnamdi', 'Admin');
-//         Nnamdi.addBook('Phone-Boot', 5);
-//         expect(library['Phone-Boot']).toBe(5);
-//     });
-// });
-
-// //Tests the handleRequest function
-// describe('4. Tests the handleRequest function', () => {
-//     test('checks if when Teacher got a particular Book remaining one before a student', () => {
-//         const Lucky = new Teacher('Lucky', 'Teacher');
-//         const Smart = new Junior('Smart', 'Junior');
-//         const Mercy = new Admin('Mercy', 'Admin');
-
-//         Mercy.addBook('Legend', 1);
-//         Smart.requestBook('Legend');
-//         Lucky.requestBook('Legend');
-//         Mercy.handleRequest();
-//         expect(givenBook['Lucky'].includes('Legend')).toBeTruthy();
-
-//     });
-//     test('checks if a student did not get a particular Book because a Teacher request for it latter', () => {
-//         const Chika = new Teacher('Chika', 'Teacher');
-//         const Me = new Junior('Me', 'Junior');
-//         const Joy = new Admin('Joy', 'Admin');
-
-//         Joy.addBook('Legends', 1);
-//         Me.requestBook('Legends');
-//         Chika.requestBook('Legends');
-//         Joy.handleRequest();
-//         expect(givenBook['Me'].includes('Legends')).toBeFalsy();
-
-//     });
-// });
+describe('Test the returnBook function', () => {
+    test('Test if a user can return Book borrowed back to the Library', () => {
+        
+    });    
+});
