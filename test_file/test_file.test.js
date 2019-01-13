@@ -2,12 +2,10 @@ const Person = require('../person/person');
 const Admin = require('../person/admin/admin');
 const User = require('../person/users/user');
 const Teacher = require('../person/users/teacher/teacher');
-const Student = require('../person/users/students/student');
 const Senior = require('../person/users/students/senior');
 const Junior = require('../person/users/students/junior');
 const library = require('../library/library');
 const givenBook = require('../borrower_catalog/givenBooks');
-const details = require('../request_file/requestDetails');
 const requestCatalog = require('../request_file/request');
 
 //an instance of Admin
@@ -182,11 +180,8 @@ describe('5. Testing the returnBook function', () => {
     test('Ensure when a user returns a book, the user\'s detail leaves the requested books list', () => {
         Kingsley.addBook('Jack the Gaint Slayer', 2);
         Ekene.requestBook('Jack the Gaint Slayer');
-        
-        // console.log(requestCatalog['Seniors']);
         Kingsley.handleRequest();
         Ekene.returnBook('Jack the Gaint Slayer');
-        // console.log(requestCatalog['Seniors']);
         let found = requestCatalog['Senior'].find( function (element) {
             return element[0] == 'Ekene' && element[1] == 'Jack the Gaint Slayer';
         });
