@@ -79,22 +79,22 @@ describe('2. Test the add book function', () => {
 describe('3. Testing the Request Book Function', () => {
     test('Ensures a Teacher should not have a book not requested from the library', () => {
         // Austin.requestBook('Alice');
-        let found = requestCatalog['Teachers'].find( function (element) {
+        let found = requestCatalog['Teacher'].find( function (element) {
             return element[0] == 'Austin' && element[1] == 'Alice';
         });
         expect(found).toBeFalsy();
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
         Eniola.requestBook('Alice');
-        let found = requestCatalog['Seniors'].find( function (element) {
-            return element[0] == that.name && element[1] == 'Alice';
+        let found = requestCatalog['Senior'].find( function (element) {
+            return element[0] == 'Eniola' && element[1] == 'Alice';
         });
-        expect(found[0]).toBe('Eniola');
-        expect(found[1]).toBe('Alice');
+        expect(found[0]).toEqual('Eniola');
+        expect(found[1]).toEqual('Alice');
     });
     test('Ensures a Junior Student can request for a book from the library', () => {
         Dare.requestBook('Alice');
-        let found = requestCatalog['Juniors'].find( function (element) {
+        let found = requestCatalog['Junior'].find( function (element) {
             return element[0] == that.name && element[1] == 'Alice';
         });
         expect(found[0]).toBe('Dare');
@@ -187,7 +187,7 @@ describe('5. Testing the returnBook function', () => {
         Kingsley.handleRequest();
         Ekene.returnBook('Jack the Gaint Slayer');
         // console.log(requestCatalog['Seniors']);
-        let found = requestCatalog['Seniors'].find( function (element) {
+        let found = requestCatalog['Senior'].find( function (element) {
             return element[0] == 'Ekene' && element[1] == 'Jack the Gaint Slayer';
         });
         expect(found).toBeFalsy();

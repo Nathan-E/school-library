@@ -20,37 +20,14 @@ extend(User, Person);
 //request function sent the book requested to the bookRequest array
 User.prototype.requestBook = function (book) {
     that = this;
-    //check if the request is from a Teacher and then pushes the request to bookRequest Teacher's array
-        if (this.type == 'Teacher') {
-            let found = requestCatalog['Teachers'].find( function (element) {
-                return element[0] == that.name && element[1] == book;
-            });
-
-            if(!found) {
-                requestCatalog['Teachers'].push([this.name, book]);
-            }            
-        }
-        //check if the request is from a Senior and then pushes the request to bookRequest Senior's array
-        if (this.type == 'Senior') {
-            let found = requestCatalog['Seniors'].find( function (element) {
-                return element[0] == that.name && element[1] == book;
-            })
-        
-            if(!found) {
-                requestCatalog['Seniors'].push([this.name, book]);
-            }
-        }
-        //check if the request is from a Junior and then pushes the request to bookRequest Junior's array
-        if (this.type == 'Junior') {
-            let found = requestCatalog['Juniors'].find( function (element) {
-                return element[0] == that.name && element[1] == book;
-            })
-        
-            if(!found) {
-                requestCatalog['Juniors'].push([this.name, book]);
-            }
-        }
-
+    //check if the user requested for the book  before
+    let found = requestCatalog[that.type].find( function (element) {
+        return element[0] == that.name && element[1] == book;
+    });
+    //logs the request if the user have not requested for the book previously
+    if(!found) {
+        requestCatalog[that.type].push([this.name, book]);
+    }   
 }
 
 //returns Book to the library and remmoves it from givenBook record
@@ -62,27 +39,10 @@ User.prototype.returnBook = function (book) {
         givenBooks[this.name].splice(a, 1);
         //add the book back to the library
         library[book]++;
-        if (this.type == 'Teacher') {
-            for(let i =0 ; i < requestCatalog['Teachers'].length; i++){
-                if (requestCatalog['Teachers'][i][0] == this.name && requestCatalog['Teachers'][i][1] == book){
-                    requestCatalog['Teachers'].splice(i, 1);
-                }
-            }
-        }
-        //check if the request is from a Senior and then pushes the request to bookRequest Senior's array
-        if (this.type == 'Senior') {
-            for(let i =0 ; i < requestCatalog['Seniors'].length; i++){
-                if (requestCatalog['Seniors'][i][0] == this.name && requestCatalog['Seniors'][i][1] == book){
-                    requestCatalog['Seniors'].splice(i, 1);
-                }
-            }
-        }
-        //check if the request is from a Junior and then pushes the request to bookRequest Junior's array
-        if (this.type == 'Junior') {
-            for(let i =0 ; i < requestCatalog['Juniors'].length; i++){
-                if (requestCatalog['Juniors'][i][0] == this.name && requestCatalog['Juniors'][i][1] == book){
-                    requestCatalog['Juniors'].splice(i, 1);
-                }
+        //removes the book fro the request Catalog
+        for(let i =0 ; i < requestCatalog[this.type].length; i++){
+            if (requestCatalog[this.type][i][0] == this.name && requestCatalog[this.type][i][1] == book){
+                requestCatalog[this.type].splice(i, 1);
             }
         }
         return `${this.name} returned ${library[book]}`;
