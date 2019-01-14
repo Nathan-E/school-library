@@ -4,6 +4,7 @@ const Senior = require('./person/users/students/senior');
 const Junior = require('./person/users/students/junior');
 const library = require('./library/library');
 const requestCatalog = require('./request_file/request');
+const details = require('./request_file/requestDetails')
 
 //an instance of Teacher
 const David = new Teacher('David', 'Teacher');
@@ -35,12 +36,12 @@ var kingsley = new Admin('Kingsley', 'Admin');
 
 kingsley.addBook('Yellow Sun', 5);
 
-// console.log(requestCatalog);
+console.log(requestCatalog);
 // console.log(kingsley.handleRequest())
-// // console.log(library);
+console.log(details[0]);
 // // console.log(givenBooks);
-// David.returnBook('Avengers');
-// // console.log(library);
+console.log(details[1]);
+console.log(details[2]);
 // console.log(kingsley.handleRequest());
 // kingsley.addBook('Alice', 25);
 // David.returnBook('Alice');
