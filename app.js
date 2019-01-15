@@ -2,48 +2,34 @@ const Admin = require('./person/admin/admin');
 const Teacher = require('./person/users/teacher/teacher');
 const Senior = require('./person/users/students/senior');
 const Junior = require('./person/users/students/junior');
-const library = require('./library/library');
-const requestCatalog = require('./request_file/request');
 
 //an instance of Teacher
-const David = new Teacher('David', 'Teacher');
+const David = new Teacher('David');
 David.requestBook('War-Ship');
 David.requestBook('War-Ship');
 David.requestBook('Avengers');
 David.requestBook('Avengers');
 
 //an instance of Junior Student
-const Dare = new Junior('Dare', 'Junior');
+const Dare = new Junior('Dare');
 Dare.requestBook('Lucy');
 
 //an instance of Teacher
-const Austin = new Teacher('Austin', 'Teacher');
+const Austin = new Teacher('Austin');
 Austin.requestBook('The Hobbit');
 Austin.requestBook('Need for Speed');
 
 //an instance of a Senior Student
-const Ekene = new Senior('Ekene', 'Senior');
+const Ekene = new Senior('Ekene');
 Ekene.requestBook('The Force Man');
 
 //an instance of a Senior Student
-const Kazeem = new Senior('Kazeem', 'Senior');
+const Kazeem = new Senior('Kazeem');
 Kazeem.requestBook('Lucy');
 Kazeem.requestBook('Avengers');
 
 //an instance of Admin
-var kingsley = new Admin('Kingsley', 'Admin');
+var kingsley = new Admin('Kingsley');
 
+//adding a book to the library
 kingsley.addBook('Yellow Sun', 5);
-
-// console.log(requestCatalog);
-// console.log(kingsley.handleRequest())
-// // console.log(library);
-// // console.log(givenBooks);
-// David.returnBook('Avengers');
-// // console.log(library);
-// console.log(kingsley.handleRequest());
-// kingsley.addBook('Alice', 25);
-// David.returnBook('Alice');
-// console.log(library);
-// console.log(givenBooks);
-

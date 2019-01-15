@@ -1,8 +1,4 @@
-//holds the name of the user against the books requested, index[0] - Teachers, index[1] - Senior and index[2] - Teachers
-let requestCatalog = {
-    'Teacher': [],
-    'Senior': [],
-    'Junior': []
-};
+//holds an object of the Users request({name: 'Joy', book: 'Stars', priority: '1'})
+const requestCatalog = [];
 
 module.exports = requestCatalog;

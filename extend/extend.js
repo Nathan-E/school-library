@@ -1,6 +1,6 @@
-function extend (Child, Parent) {
+function extend(Child, Parent) {
     Child.prototype = Object.create(Parent.prototype);
-    Child.prototype.constructor = Child; 
+    Child.prototype.constructor = Child;
 }
 
 module.exports = extend;
