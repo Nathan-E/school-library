@@ -33,11 +33,15 @@ User.prototype.returnBook = function (book) {
     that = this;
     //checks if the user was given the book 
     if (givenBooks[this.name].includes(book)) {
-        const index = givenBooks[this.name].indexOf(book);
         //removes the book from the list of books given to the user
-        givenBooks[this.name].splice(index, 1);
+        givenBooks[this.name].splice(givenBooks[this.name].indexOf(book), 1);
         //add the book back to the library
         library[book]++;
+        for(request of requestCatalog){
+            if(request['book'] == book && request['name'] == that.name){
+                requestCatalog.splice(requestCatalog.indexOf(request), 1);
+            }
+        }
         return `${library[book]} returned`;
     } 
     // if the user was not given the book, tells the user that the book is not from the library
