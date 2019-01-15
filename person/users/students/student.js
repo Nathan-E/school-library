@@ -3,12 +3,11 @@ const extend = require('../../../extend/extend');
 
 
 //Student constructor function
-function Student(name, type) {
+function Student(name) {
     User.call(this, name);
-    this.type = type
 }
 
-//ensures prototype chaining to parent Student
+//ensures prototype chaining to parent (User)
 extend(Student, User);
 
 module.exports = Student;

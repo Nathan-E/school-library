@@ -2,13 +2,12 @@ const User = require('../user');
 const extend = require('../../../extend/extend');
 
 //Teacher constructor function
-function Teacher(name, type) {
+function Teacher(name) {
     User.call(this, name);
-    this.type = type;
     this.priority = '1';
 }
 
-//ensures prototype chaining to parent Student
+//ensures prototype chaining to parent (User)
 extend(Teacher, User);
 
 

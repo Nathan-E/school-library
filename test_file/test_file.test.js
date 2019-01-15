@@ -9,28 +9,28 @@ const givenBook = require('../borrower_catalog/givenBooks');
 const requestCatalog = require('../request_file/request');
 
 //an instance of Admin
-var Kingsley = new Admin('Kingsley', 'Admin');
+var Kingsley = new Admin('Kingsley');
 
 //an instance of Teacher
-const David = new Teacher('David', 'Teacher');
+const David = new Teacher('David');
 
 //an instance of Teacher
-const Austin = new Teacher('Austin', 'Teacher');
+const Austin = new Teacher('Austin');
 
 //an instance of a Senior Student
-const Ekene = new Senior('Ekene', 'Senior');
+const Ekene = new Senior('Ekene');
 
 //an instance of a Senior Student
-const Eniola = new Senior('Eniola', 'Senior');
+const Eniola = new Senior('Eniola');
 
 //an instance of Junior Student
-const Dare = new Junior('Dare', 'Junior');
+const Dare = new Junior('Dare');
 
 //an instance of Junior Student
-const Nnamdi = new Junior('Nnamdi', 'Junior');
+const Nnamdi = new Junior('Nnamdi');
 
 //Tests if the extend function the carry-out prototype chain works
-describe('1. test the extend function that ensures inheritance', () => {
+describe('1. Testing inheritance', () => {
     test('checks if an Admin does not inherits from the User prototype chain', () => {
         expect(User.prototype.isPrototypeOf(Kingsley)).toBeFalsy();
     });
@@ -64,43 +64,45 @@ describe('2. Test the add book function', () => {
         expect(library['Decagon HandBook']).toBe(30);
     });
     test('Ensures a Teacher cannot add a book to the library', () => {
-        expect(()=> {David.addBook('ReactJS', 20)}).toThrow();
+        expect(() => {
+            David.addBook('ReactJS', 20);
+        }).toThrow();
     });
     test('Ensures a Senior cannot add a book to the library', () => {
-        expect(()=> {Ekene.addBook('ReactJS', 20)}).toThrow();
+        expect(() => {
+            Ekene.addBook('ReactJS', 20);
+        }).toThrow();
     });
     test('Ensures a Junior cannot add a book to the library', () => {
-        expect(()=> {Dare.addBook('ReactJS', 20)}).toThrow();
+        expect(() => {
+            Dare.addBook('ReactJS', 20);
+        }).toThrow();
     });
 });
 
 describe('3. Testing the Request Book Function', () => {
     test('Ensures a Teacher should not have a book not requested from the library', () => {
-        // Austin.requestBook('Alice');
-        let found = requestCatalog['Teacher'].find( function (element) {
-            return element[0] == 'Austin' && element[1] == 'Alice';
+        let found = requestCatalog.find(function (element) {
+            return element['name'] == 'Austin' && element['book'] == 'Alice';
         });
         expect(found).toBeFalsy();
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
         Eniola.requestBook('Alice');
-        let found = requestCatalog['Senior'].find( function (element) {
-            return element[0] == 'Eniola' && element[1] == 'Alice';
+        let found = requestCatalog.find(function (element) {
+            return element['name'] == 'Eniola' && element['book'] == 'Alice';
         });
-        expect(found[0]).toEqual('Eniola');
-        expect(found[1]).toEqual('Alice');
+        expect(found['name']).toEqual('Eniola');
+        expect(found['book']).toEqual('Alice');
     });
     test('Ensures a Junior Student can request for a book from the library', () => {
         Dare.requestBook('Alice');
-        let found = requestCatalog['Junior'].find( function (element) {
-            return element[0] == that.name && element[1] == 'Alice';
+        let found = requestCatalog.find(function (element) {
+            return element['name'] == 'Dare' && element['book'] == 'Alice';
         });
-        expect(found[0]).toBe('Dare');
-        expect(found[1]).toBe('Alice');
+        expect(found['name']).toBe('Dare');
+        expect(found['book']).toBe('Alice');
     });
-    // test('Ensures when a User request for a book, the request get logged to the requestCatalog', () => {
-    //     Dare.requestBook()
-    // });
 });
 
 describe('4. Testing the handleRequest function', () => {
@@ -158,7 +160,7 @@ describe('4. Testing the handleRequest function', () => {
     });
 });
 
-describe('5. Testing the returnBook function', () => {
+describe('5. Testing the Use returnBook function', () => {
     test('Ensure a user can return a Book borrowed, to the Library', () => {
         Kingsley.addBook('Returned', 1);
         Austin.requestBook('Returned');
@@ -166,7 +168,7 @@ describe('5. Testing the returnBook function', () => {
         expect(library['Returned']).toBe(0);
         Austin.returnBook('Returned');
         expect(library['Returned']).toBe(1);
-    });    
+    });
     test('Ensure a user does not have a book after returning it', () => {
         Kingsley.addBook('Wonders', 10);
         Dare.requestBook('Wonders');
@@ -182,8 +184,8 @@ describe('5. Testing the returnBook function', () => {
         Ekene.requestBook('Jack the Gaint Slayer');
         Kingsley.handleRequest();
         Ekene.returnBook('Jack the Gaint Slayer');
-        let found = requestCatalog['Senior'].find( function (element) {
-            return element[0] == 'Ekene' && element[1] == 'Jack the Gaint Slayer';
+        let found = requestCatalog.find(function (element) {
+            return element['name'] == 'Ekene' && element['book'] == 'Jack the Gaint Slayer';
         });
         expect(found).toBeFalsy();
     });
