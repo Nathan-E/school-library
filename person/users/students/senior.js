@@ -8,6 +8,6 @@ function Senior(name) {
 }
 
 //ensures prototype chaining to parent (Student)
-extend(Senior, Student)
+extend(Senior, Student);
 
 module.exports = Senior;

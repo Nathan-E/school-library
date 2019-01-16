@@ -82,10 +82,7 @@ describe('2. Test the add book function', () => {
 
 describe('3. Testing the Request Book Function', () => {
     test('Ensures a Teacher should not have a book not requested from the library', () => {
-        let found = requestCatalog.find(function (element) {
-            return element['name'] == 'Austin' && element['book'] == 'Alice';
-        });
-        expect(found).toBeFalsy();
+        expect(givenBook['Austin']).not.toContain('Brevity');
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
         Eniola.requestBook('Alice');
