@@ -6,9 +6,9 @@ const givenBooks = require('../../borrower_catalog/givenBooks');
 
 
 //User constructor (Parent function), givenBooks holds the books collected by the user
-function User(name) {
+function User(name, id) {
     Person.call(this, name);
-    givenBooks[this.name] = [];
+    this.id = id;
 }
 
 //ensures prototype chaining to parent (Person)
@@ -17,18 +17,20 @@ extend(User, Person);
 
 
 //request function sent the book requested to requestCatalog array
-User.prototype.requestBook = function (book) {
+User.prototype.requestBook = function (bookName, author) {
     requestCatalog.push({
-        'name': this.name,
-        'book': book,
-        'priority': this.priority
+        name: this.name,
+        id: this.id,
+        book: bookName,
+        author: author,
+        priority: this.priority
     });
 }
 
 
 
 //returns Book to the library and removes it from the User's givenBook record
-User.prototype.returnBook = function (book) {
+User.prototype.returnBook = function (bookName, author) {
     that = this;
     //checks if the user was given the book 
     if (givenBooks[this.name].includes(book)) {

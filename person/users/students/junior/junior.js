@@ -1,9 +1,9 @@
-const Student = require('./student');
-const extend = require('../../../extend/extend');
+const Student = require('../student');
+const extend = require('../../../../extend/extend');
 
 //Junior constructor function
-function Junior(name) {
-    Student.call(this, name);
+function Junior(name, id) {
+    Student.call(this, name, id);
     this.priority = '3';
 }
 

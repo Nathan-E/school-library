@@ -1,3 +1,3 @@
-let givenBooks = {};
+let givenBooks = [];
 
 module.exports = givenBooks;
