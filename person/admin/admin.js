@@ -1,8 +1,8 @@
 const Person = require('../person');
 const extend = require('../../extend/extend');
-const library = require('../../library/library');
-const requestCatalog = require('../../request_file/request');
-const givenBooks = require('../../borrower_catalog/givenBooks');
+const library = require('../../data/library/library');
+const requestCatalog = require('../../data/request_file/request');
+const givenBooks = require('../../data/borrower_catalog/givenBooks');
 
 //Admin constructor function
 function Admin(name) {

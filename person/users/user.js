@@ -1,8 +1,8 @@
 const Person = require('../person');
 const extend = require('../../extend/extend');
-const requestCatalog = require('../../request_file/request');
-const library = require('../../library/library');
-const givenBooks = require('../../borrower_catalog/givenBooks');
+const requestCatalog = require('../../data/request_file/request');
+const library = require('../../data/library/library');
+const givenBooks = require('../../data/borrower_catalog/givenBooks');
 
 
 //User constructor (Parent function), givenBooks holds the books collected by the user

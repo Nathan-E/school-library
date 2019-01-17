@@ -1,14 +1,22 @@
+const User = require('./user');
 const Admin = require('../admin/admin');
+const Teacher = require('./teacher/teacher');
 const Senior = require('../users/students/senior/senior');
 const Junior = require('../users/students/junior/junior');
-const givenBook = require('../../borrower_catalog/givenBooks');
-const requestCatalog = require('../../request_file/request');
+const givenBook = require('../../data/borrower_catalog/givenBooks');
+const requestCatalog = require('../../data/request_file/request');
 
 //an instance of Admin
 var Kingsley = new Admin('Kingsley');
 
 //an instance of a Senior Student
 const Ekene = new Senior('Ekene', 5434);
+
+//an instance of Teacher
+const David = new Teacher('David', 2345);
+
+//an instance of Teacher
+const Austin = new Teacher('Austin', 1123);
 
 //an instance of a Senior Student
 const Eniola = new Senior('Eniola', 6445);
@@ -19,7 +27,24 @@ const Dare = new Junior('Dare', 6543);
 //an instance of Junior Student
 const Nnamdi = new Junior('Nnamdi', 3343);
 
-describe('1. Testing the Request Book Function', () => {
+describe('1. Testing inheritance', () => {
+    test('checks if a student and a teacher does not inherits from the Admin prototype chain', () => {
+        expect(Admin.prototype.isPrototypeOf(Austin)).toBeFalsy();
+        expect(Admin.prototype.isPrototypeOf(Dare)).toBeFalsy();
+        expect(Admin.prototype.isPrototypeOf(Eniola)).toBeFalsy();
+    });
+    test('checks if a Teacher instance inherits from the User prototype chain', () => {
+        expect(User.prototype.isPrototypeOf(David)).toBeTruthy();
+    });
+    test('checks if a Senior student user inherits from the User prototype chain', () => {
+        expect(User.prototype.isPrototypeOf(Ekene)).toBeTruthy();
+    });
+    test('checks if a Junior student user inherits from the User prototype chain', () => {
+        expect(User.prototype.isPrototypeOf(Nnamdi)).toBeTruthy();
+    });
+});
+
+describe('2. Testing the Request Book Function', () => {
     test('Ensures a Teacher should not have a book not requested from the library', () => {
         expect(givenBook).not.toContainEqual({
             name: 'Austin',
@@ -51,8 +76,8 @@ describe('1. Testing the Request Book Function', () => {
     });
 });
 
-
-describe('2. Testing the Use returnBook function', () => {
+//Test the ReturnBook function
+describe('3. Testing the Use returnBook function', () => {
     test('Ensure a user can return a Book borrowed, to the Library', () => {
         Kingsley.addBook('The Navy', 'Butt Rice', 22, '5749-8979');
         Nnamdi.requestBook('The Navy', 'Butt Rice');
