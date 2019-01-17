@@ -2,8 +2,8 @@ const Person = require('../person/person');
 const Admin = require('../person/admin/admin');
 const User = require('../person/users/user');
 const Teacher = require('../person/users/teacher/teacher');
-const Senior = require('../person/users/students/senior');
-const Junior = require('../person/users/students/junior');
+const Senior = require('../person/users/students/senior/senior');
+const Junior = require('../person/users/students/junior/junior');
 const library = require('../library/library');
 const givenBook = require('../borrower_catalog/givenBooks');
 const requestCatalog = require('../request_file/request');
@@ -57,17 +57,21 @@ describe('1. Testing inheritance', () => {
 describe('2. Test the add book function', () => {
     test('Ensures an admin can add a new book to the library', () => {
         Kingsley.addBook('Decagon HandBook', 'Jeff Wills', 10, '6583-1234');
-        let check = library.find(function (e) {
-            return e['ISBN'] === '6583-1234';
+        expect(library).toContainEqual({
+            book: 'Decagon HandBook',
+            author: 'Jeff Wills',
+            quantity: 10,
+            ISBN: '6583-1234'
         });
-        expect(check).toBeTruthy();
     });
     test('Ensures an admin can update the number of any book in the library', () => {
         Kingsley.addBook('Decagon HandBook', 'Jeff Wills', 14, '6583-1234');
-        let check = library.find(function (e) {
-            return e['ISBN'] === '6583-1234';
-        });
-        expect(check['quantity']).toBe(24);
+        expect(library).toContainEqual({
+            book: 'Decagon HandBook',
+            author: 'Jeff Wills',
+            quantity: 24,
+            ISBN: '6583-1234'
+        });;
     });
     test('Ensures a Teacher cannot add a book to the library', () => {
         expect(() => {
@@ -88,108 +92,197 @@ describe('2. Test the add book function', () => {
 
 describe('3. Testing the Request Book Function', () => {
     test('Ensures a Teacher should not have a book not requested from the library', () => {
-        expect(givenBook['Austin']).not.toContain('Brevity');
+        expect(givenBook).not.toContainEqual({
+            name: 'Austin',
+            id: 1123,
+            book: 'Alice',
+            author: 'Mitchel Goose',
+            priority: 1
+        });
     });
     test('Ensures a Senior Student can request for a book from the library', () => {
-        Eniola.requestBook('Alice');
-        let found = requestCatalog.find(function (element) {
-            return element['name'] == 'Eniola' && element['book'] == 'Alice';
+        Eniola.requestBook('Alice', 'Mitchel Goose');
+        expect(requestCatalog).toContainEqual({
+            name: 'Eniola',
+            id: 6445,
+            book: 'Alice',
+            author: 'Mitchel Goose',
+            priority: '2'
         });
-        expect(found['name']).toEqual('Eniola');
-        expect(found['book']).toEqual('Alice');
     });
     test('Ensures a Junior Student can request for a book from the library', () => {
-        Dare.requestBook('Alice');
-        let found = requestCatalog.find(function (element) {
-            return element['name'] == 'Dare' && element['book'] == 'Alice';
+        Dare.requestBook('Alice', 'Mitchel Goose');
+        expect(requestCatalog).toContainEqual({
+            name: 'Dare',
+            id: 6543,
+            book: 'Alice',
+            author: 'Mitchel Goose',
+            priority: '3'
         });
-        expect(found['name']).toBe('Dare');
-        expect(found['book']).toBe('Alice');
     });
 });
 
 describe('4. Testing the handleRequest function', () => {
     test('Ensures an Admin can issue books in the library', () => {
-        Austin.requestBook('War-Ship');
+        Austin.requestBook('War-Ship', 'Jeff Willams');
         Kingsley.handleRequest();
-        expect(givenBook['Austin']).toContain('War-Ship');
+        expect(givenBook).toContainEqual({
+            name: 'Austin',
+            id: 1123,
+            book: 'War-Ship',
+            author: 'Jeff Willams',
+            priority: '1'
+        });
     });
     test('Ensures an Admin cannot issue books not in the library', () => {
-        Nnamdi.requestBook('Growth');
+        Nnamdi.requestBook('Growth', 'Geofrey Dome');
         Kingsley.handleRequest();
-        expect(givenBook['Nnamdi']).not.toContain('Growth');
+        expect(givenBook).not.toContainEqual({
+            name: 'Nnamdi',
+            id: 3343,
+            book: 'Growth',
+            author: 'Geofrey Dome',
+            priority: '3'
+        });
     });
     test('Ensures an Admin issues a book remaining one copy based on the first request from teachers', () => {
-        Kingsley.addBook('World', 1);
-        David.requestBook('World');
-        Austin.requestBook('World');
+        Kingsley.addBook('DecaDev Guide', 'HR', 1, '9324-5484');
+        David.requestBook('DecaDev Guide', 'HR');
+        Austin.requestBook('DecaDev Guide', 'HR');
         Kingsley.handleRequest();
-        expect(givenBook['David']).toContain('World');
-        expect(givenBook['Austin']).not.toContain('World');
+        expect(givenBook).toContainEqual({
+            name: 'David',
+            id: 2345,
+            book: 'DecaDev Guide',
+            author: 'HR',
+            priority: '1'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Austin',
+            id: 1123,
+            book: 'DecaDev Guide',
+            author: 'HR',
+            priority: '1'
+        });
     });
     test('Ensures an Admin issues a book remaining one copy based on the first request from Senior Students', () => {
-        Kingsley.addBook('Ape Land', 1);
-        Ekene.requestBook('Ape Land');
-        Eniola.requestBook('Ape Land');
+        Kingsley.addBook('The Wolf', 'James Hills', 1, '3690-5484');
+        Ekene.requestBook('The Wolf', 'James Hills');
+        Eniola.requestBook('The Wolf', 'James Hills');
         Kingsley.handleRequest();
-        expect(givenBook['Ekene']).toContain('Ape Land');
-        expect(givenBook['Eniola']).not.toContain('Ape Land');
+        expect(givenBook).toContainEqual({
+            name: 'Ekene',
+            id: 5434,
+            book: 'The Wolf',
+            author: 'James Hills',
+            priority: '2'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Eniola',
+            id: 6445,
+            book: 'The Wolf',
+            author: 'James Hills',
+            priority: '2'
+        });
     });
-    test('Ensures an Admin issues a book remaining one copy based on the first request from Senior Students', () => {
-        Kingsley.addBook('Politics', 1);
-        Nnamdi.requestBook('Politics');
-        Dare.requestBook('Politics');
+    test('Ensures an Admin issues a book remaining one copy based on the first request from Junior Students', () => {
+        Kingsley.addBook('Wilderness', 'Godfrey Wills', 1, '3690-8979');
+        Nnamdi.requestBook('Wilderness', 'Godfrey Wills');
+        Dare.requestBook('Wilderness', 'Godfrey Wills');
         Kingsley.handleRequest();
-        expect(givenBook['Nnamdi']).toContain('Politics');
-        expect(givenBook['Dare']).not.toContain('Politics');
+        expect(givenBook).toContainEqual({
+            name: 'Nnamdi',
+            id: 3343,
+            book: 'Wilderness',
+            author: 'Godfrey Wills',
+            priority: '3'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Dare',
+            id: 6543,
+            book: 'Wilderness',
+            author: 'Godfrey Wills',
+            priority: '3'
+        });
     });
     test('Ensures an Admin issues a book remaining one copy to Teachers before students, even when the students ordered first', () => {
-        Kingsley.addBook('Luminous', 1);
-        Dare.requestBook('Luminous');
-        Ekene.requestBook('Luminous');
-        David.requestBook('Luminous');
+        Kingsley.addBook('Heaven', 'Peter Dame', 1, '4983-8979');
+        Nnamdi.requestBook('Heaven', 'Peter Dame');
+        Ekene.requestBook('Heaven', 'Peter Dame');
+        Austin.requestBook('Heaven', 'Peter Dame');
         Kingsley.handleRequest();
-        expect(givenBook['David']).toContain('Luminous');
-        expect(givenBook['Ekene']).not.toContain('Luminous');
-        expect(givenBook['Dare']).not.toContain('Luminous');
+        expect(givenBook).toContainEqual({
+            name: 'Austin',
+            id: 1123,
+            book: 'Heaven',
+            author: 'Peter Dame',
+            priority: '1'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Ekene',
+            id: 5434,
+            book: 'Heaven',
+            author: 'Peter Dame',
+            priority: '2'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Nnamdi',
+            id: 3343,
+            book: 'Heaven',
+            author: 'Peter Dame',
+            priority: '3'
+        });
     });
     test('Ensures an Admin issues a book remaining one copy to Senior Students before Juniors, even when the Junior student ordered first', () => {
-        Kingsley.addBook('Love', 1);
-        Nnamdi.requestBook('Love');
-        Eniola.requestBook('Love');
+        Kingsley.addBook('The Team Lead', 'Bruce Wayne', 1, '4983-0988');
+        Nnamdi.requestBook('The Team Lead', 'Bruce Wayne');
+        Ekene.requestBook('The Team Lead', 'Bruce Wayne');
         Kingsley.handleRequest();
-        expect(givenBook['Eniola']).toContain('Love');
-        expect(givenBook['Nnamdi']).not.toContain('Love');
+        expect(givenBook).toContainEqual({
+            name: 'Ekene',
+            id: 5434,
+            book: 'The Team Lead',
+            author: 'Bruce Wayne',
+            priority: '2'
+        });
+        expect(givenBook).not.toContainEqual({
+            name: 'Nnamdi',
+            id: 3343,
+            book: 'The Team Lead',
+            author: 'Bruce Wayne',
+            priority: '3'
+        });
     });
 });
 
 describe('5. Testing the Use returnBook function', () => {
     test('Ensure a user can return a Book borrowed, to the Library', () => {
-        Kingsley.addBook('Returned', 1);
-        Austin.requestBook('Returned');
+        Kingsley.addBook('The Navy', 'Butt Rice', 22, '5749-8979');
+        Nnamdi.requestBook('The Navy', 'Butt Rice');
         Kingsley.handleRequest();
-        expect(library['Returned']).toBe(0);
-        Austin.returnBook('Returned');
-        expect(library['Returned']).toBe(1);
-    });
-    test('Ensure a user does not have a book after returning it', () => {
-        Kingsley.addBook('Wonders', 10);
-        Dare.requestBook('Wonders');
-        Kingsley.handleRequest();
-        Dare.returnBook('Wonders');
-        expect(givenBook['Dare']).not.toContain('Wonders');
+        Nnamdi.returnBook('The Navy', 'Butt Rice');
+        expect(givenBook).not.toContainEqual({
+            name: 'Nnamdi',
+            id: 3343,
+            book: 'The Navy',
+            author: 'Butt Rice',
+            priority: '3'
+        });
     });
     test('Ensures a user cannot return a book not taken fro the library', () => {
-        expect(Dare.returnBook('Terminal')).toBe('Dare, Terminal is not from the Library');
+        expect(Dare.returnBook('Terminal', 'Jones Ross')).toBe('Dare, Terminal is not from the Library');
     });
     test('Ensure when a user returns a book, the user\'s detail leaves the requested books list', () => {
-        Kingsley.addBook('Jack the Gaint Slayer', 2);
-        Ekene.requestBook('Jack the Gaint Slayer');
+        Kingsley.addBook('Jack the Gaint Slayer', 'Frank Eddy', 2, '8439-2842');
+        Ekene.requestBook('Jack the Gaint Slayer', 'Frank Eddy');
         Kingsley.handleRequest();
-        Ekene.returnBook('Jack the Gaint Slayer');
-        let found = requestCatalog.find(function (element) {
-            return element['name'] == 'Ekene' && element['book'] == 'Jack the Gaint Slayer';
+        Ekene.returnBook('Jack the Gaint Slayer', 'Frank Eddy');
+        expect(requestCatalog).not.toContainEqual({
+            name: 'Ekene',
+            id: 5434,
+            book: 'Jack the Gaint Slayer',
+            author: 'Frank Eddy',
+            priority: '2'
         });
-        expect(found).toBeFalsy();
     });
 });

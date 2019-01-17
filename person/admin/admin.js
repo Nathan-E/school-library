@@ -15,7 +15,7 @@ extend(Admin, Person);
 //Add books to the library
 Admin.prototype.addBook = function (book, author, quantity, ISBN) {
     //checks if a book is available, and adds the present quantity to it
-    const bookIndex = library.findIndex(obj => obj.ISBN === ISBN && obj.book === bookk);
+    const bookIndex = library.findIndex(obj => obj.ISBN === ISBN && obj.book === book);
 
     //if a book is not in the library, it adds the book to the library
     if (bookIndex === -1) {
@@ -43,7 +43,7 @@ Admin.prototype.handleRequest = function () {
 
     //loops through the request log
     for (let request of requestCatalog) {
-        let bookIndex = library.findIndex( obj => obj.name === request['book'] && obj.author === request['author']);
+        let bookIndex = library.findIndex( obj => obj.book === request['book'] && obj.author === request['author']);
         let checkUser = givenBooks.find(function (obj) {
             return obj.id === request['id'] && obj.book === request['book'] && obj.author === request['author']
         });
@@ -53,7 +53,7 @@ Admin.prototype.handleRequest = function () {
             library[bookIndex]['quantity']--;
             //add the book to the list of books given to the user
             givenBooks.push(request);
-        } else if (library[bookIndex]['quantity'] === 0) {
+        } else if (bookIndex > -1 && library[bookIndex]['quantity'] === 0) {
             unAttendedRequest.push(`${request['name']}, ${request['book']} has been taken`);
         }
     }

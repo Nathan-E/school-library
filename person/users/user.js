@@ -37,9 +37,9 @@ User.prototype.returnBook = function (book, author) {
     let checkUser = givenBooks.findIndex(obj => obj.id === that.id && obj.book === book && obj.author === author);
     if (checkUser > -1) {
         //removes the book from the list of books given to the user
-        givenBooka.splice(checkUser, 1);
+        givenBooks.splice(checkUser, 1);
         //add the book back to the library
-        let bookIndex = library.findIndex( obj => obj.name === book && obj.author === author);
+        let bookIndex = library.findIndex( obj => obj.book === book && obj.author === author);
         library[bookIndex]['quantity']++;
         //removes the book from the requested Book catalog
         for (request of requestCatalog) {
