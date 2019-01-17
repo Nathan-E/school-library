@@ -12,15 +12,22 @@ function Admin(name) {
 //ensures prototype chaining to parent (Person)
 extend(Admin, Person);
 
-//Add books to the books object
-Admin.prototype.addBook = function (name, quantity) {
+//Add books to the library
+Admin.prototype.addBook = function (bookName, author, quantity, ISBN) {
     //checks if a book is available, and adds the present quantity to it
-    if (library[name]) {
-        library[name] += quantity;
-    }
+    const bookIndex = library.findIndex(obj => obj.ISBN === ISBN && obj.bookName === bookName);
+
     //if a book is not in the library, it adds the book to the library
-    else {
-        library[name] = quantity;
+    if (bookIndex === -1) {
+        library.push({
+            bookName,
+            author,
+            quantity,
+            ISBN
+        });
+    //Updates the quantity of a book, if it exists in the library
+    } else {
+        library[bookIndex]['quantity'] += quantity;
     }
 }
 
