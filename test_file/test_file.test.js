@@ -12,22 +12,22 @@ const requestCatalog = require('../request_file/request');
 var Kingsley = new Admin('Kingsley');
 
 //an instance of Teacher
-const David = new Teacher('David');
+const David = new Teacher('David', 2345);
 
 //an instance of Teacher
-const Austin = new Teacher('Austin');
+const Austin = new Teacher('Austin', 1123);
 
 //an instance of a Senior Student
-const Ekene = new Senior('Ekene');
+const Ekene = new Senior('Ekene', 5434);
 
 //an instance of a Senior Student
-const Eniola = new Senior('Eniola');
+const Eniola = new Senior('Eniola', 6445);
 
 //an instance of Junior Student
-const Dare = new Junior('Dare');
+const Dare = new Junior('Dare', 6543);
 
 //an instance of Junior Student
-const Nnamdi = new Junior('Nnamdi');
+const Nnamdi = new Junior('Nnamdi', 3343);
 
 //Tests if the extend function the carry-out prototype chain works
 describe('1. Testing inheritance', () => {
@@ -56,26 +56,32 @@ describe('1. Testing inheritance', () => {
 //Tests the add book function 
 describe('2. Test the add book function', () => {
     test('Ensures an admin can add a new book to the library', () => {
-        Kingsley.addBook('Decagon HandBook', 10);
-        expect(library['Decagon HandBook']).toBeTruthy();
+        Kingsley.addBook('Decagon HandBook', 'Jeff Wills', 10, '6583-1234');
+        let check = library.find(function (e) {
+            return e['ISBN'] === '6583-1234';
+        });
+        expect(check).toBeTruthy();
     });
     test('Ensures an admin can update the number of any book in the library', () => {
-        Kingsley.addBook('Decagon HandBook', 20);
-        expect(library['Decagon HandBook']).toBe(30);
+        Kingsley.addBook('Decagon HandBook', 'Jeff Wills', 14, '6583-1234');
+        let check = library.find(function (e) {
+            return e['ISBN'] === '6583-1234';
+        });
+        expect(check['quantity']).toBe(24);
     });
     test('Ensures a Teacher cannot add a book to the library', () => {
         expect(() => {
-            David.addBook('ReactJS', 20);
+            David.addBook('Hard Labs', 'David Mogbeyi', 20, '5638-2134');
         }).toThrow();
     });
     test('Ensures a Senior cannot add a book to the library', () => {
         expect(() => {
-            Ekene.addBook('ReactJS', 20);
+            Ekene.addBook('The art of convincing people', 'Ekene Agu', 8, '3803-3228');
         }).toThrow();
     });
     test('Ensures a Junior cannot add a book to the library', () => {
         expect(() => {
-            Dare.addBook('ReactJS', 20);
+            Dare.addBook('Redemption', 'Dare Lawal', 8, '4932-3030');
         }).toThrow();
     });
 });

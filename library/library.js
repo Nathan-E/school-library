@@ -1,33 +1,33 @@
 //Book object holds all the books
 let library = [{
-        bookName: 'War-Ship',
+        book: 'War-Ship',
         author: 'Jeff Willams',
         quantity: 10,
-        ISBN: 1234
+        ISBN: '1234-2924'
     },
     {
-        bookName: 'Alice',
+        book: 'Alice',
         author: 'Mitchel Goose',
         quantity: 2,
-        ISBN: 1235
+        ISBN: '1235-4804'
     },
     {
-        bookName: 'Lucy',
+        book: 'Lucy',
         author: 'Jimmy Rosy',
         quantity: 3,
-        ISBN: 1236
+        ISBN: '1236-3533'
     },
     {
-        bookName: 'The Hobbit',
+        book: 'The Hobbit',
         author: 'Jane Mills',
         quantity: 6,
-        ISBN: 6536
+        ISBN: '6536-8605'
     },
     {
-        bookName: 'Avengers',
+        book: 'Avengers',
         author: 'Chime John',
         quantity: 2,
-        ISBN: 7736
+        ISBN: '7736-5797'
     }
 ]
 
