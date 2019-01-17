@@ -1,14 +1,14 @@
 const Person = require('../person');
 const extend = require('../../extend/extend');
-const requestCatalog = require('../../request_file/request');
-const library = require('../../library/library');
-const givenBooks = require('../../borrower_catalog/givenBooks');
+const requestCatalog = require('../../data/request_file/request');
+const library = require('../../data/library/library');
+const givenBooks = require('../../data/borrower_catalog/givenBooks');
 
 
 //User constructor (Parent function), givenBooks holds the books collected by the user
-function User(name) {
+function User(name, id) {
     Person.call(this, name);
-    givenBooks[this.name] = [];
+    this.id = id;
 }
 
 //ensures prototype chaining to parent (Person)
@@ -17,32 +17,37 @@ extend(User, Person);
 
 
 //request function sent the book requested to requestCatalog array
-User.prototype.requestBook = function (book) {
+User.prototype.requestBook = function (book, author) {
+    that = this;
     requestCatalog.push({
-        'name': this.name,
-        'book': book,
-        'priority': this.priority
+        name: that.name,
+        id: that.id,
+        book: book,
+        author: author,
+        priority: that.priority
     });
 }
 
 
 
 //returns Book to the library and removes it from the User's givenBook record
-User.prototype.returnBook = function (book) {
+User.prototype.returnBook = function (book, author) {
     that = this;
     //checks if the user was given the book 
-    if (givenBooks[this.name].includes(book)) {
+    let checkUser = givenBooks.findIndex(obj => obj.id === that.id && obj.book === book && obj.author === author);
+    if (checkUser > -1) {
         //removes the book from the list of books given to the user
-        givenBooks[this.name].splice(givenBooks[this.name].indexOf(book), 1);
+        givenBooks.splice(checkUser, 1);
         //add the book back to the library
-        library[book]++;
+        let bookIndex = library.findIndex( obj => obj.book === book && obj.author === author);
+        library[bookIndex]['quantity']++;
         //removes the book from the requested Book catalog
         for (request of requestCatalog) {
-            if (request['book'] == book && request['name'] == that.name) {
-                requestCatalog.splice(requestCatalog.indexOf(request), 1);
+            if (request['book'] == book && request['id'] == that.id
+             && request['author'] === author) {
+            requestCatalog.splice(requestCatalog.indexOf(request), 1);
             }
         }
-        return `${library[book]} returned`;
     }
     // if the user was not given the book, tells the user that the book is not from the library
     else {

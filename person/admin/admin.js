@@ -1,8 +1,8 @@
 const Person = require('../person');
 const extend = require('../../extend/extend');
-const library = require('../../library/library');
-const requestCatalog = require('../../request_file/request');
-const givenBooks = require('../../borrower_catalog/givenBooks');
+const library = require('../../data/library/library');
+const requestCatalog = require('../../data/request_file/request');
+const givenBooks = require('../../data/borrower_catalog/givenBooks');
 
 //Admin constructor function
 function Admin(name) {
@@ -12,15 +12,22 @@ function Admin(name) {
 //ensures prototype chaining to parent (Person)
 extend(Admin, Person);
 
-//Add books to the books object
-Admin.prototype.addBook = function (name, quantity) {
+//Add books to the library
+Admin.prototype.addBook = function (book, author, quantity, ISBN) {
     //checks if a book is available, and adds the present quantity to it
-    if (library[name]) {
-        library[name] += quantity;
-    }
+    const bookIndex = library.findIndex(obj => obj.ISBN === ISBN && obj.book === book);
+
     //if a book is not in the library, it adds the book to the library
-    else {
-        library[name] = quantity;
+    if (bookIndex === -1) {
+        library.push({
+            book: book,
+            author: author,
+            quantity: quantity,
+            ISBN: ISBN
+        });
+        //Updates the quantity of a book, if it exists in the library
+    } else {
+        library[bookIndex]['quantity'] += quantity;
     }
 }
 
@@ -35,13 +42,18 @@ Admin.prototype.handleRequest = function () {
     });
 
     //loops through the request log
-    for (request of requestCatalog) {
-        if (library[request['book']] && !givenBooks[request['name']].includes(request['book'])) {
+    for (let request of requestCatalog) {
+        let bookIndex = library.findIndex( obj => obj.book === request['book'] && obj.author === request['author']);
+        let checkUser = givenBooks.find(function (obj) {
+            return obj.id === request['id'] && obj.book === request['book'] && obj.author === request['author']
+        });
+
+        if ( bookIndex > -1 && library[bookIndex]['quantity'] && !checkUser) {
             //reduces the quantity of a book when it is given
-            library[request['book']]--;
+            library[bookIndex]['quantity']--;
             //add the book to the list of books given to the user
-            givenBooks[request['name']].push(request['book']);
-        } else if (library[request['book']] == 0 && !givenBooks[request['name']].includes(request['book'])) {
+            givenBooks.push(request);
+        } else if (bookIndex > -1 && library[bookIndex]['quantity'] === 0) {
             unAttendedRequest.push(`${request['name']}, ${request['book']} has been taken`);
         }
     }
